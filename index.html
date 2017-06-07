@@ -25,7 +25,7 @@
 	<div class="container controller text-center" id="">
 		<div class="row">
 			<div class="col-xs-12">
-				<h3 class="time-remaining text-center"> Time Remaining: <span id="timeLeft"></span></h3>
+				<h3 class="time-remaining text-center"> Time Left: <span id="timeLeft"></span></h3>
 				<hr>
 				<h2 class="questions text-center" id="question"></h2>
 				<ul class="answers text-center" id="answers">
@@ -33,21 +33,39 @@
 					<li class="answer" id="answer2"></li>
 					<li class="answer" id="answer3"></li>
 					<li class="answer" id="answer4"></li>
+					<li class="answer" id="answer5"></li>
 				</ul>
 				<img id="imgsrc" src="">
 			</div>
 		</div>
 	</div>
 
-	<img class="img-responsive center-block" id="gameimage" src="assets/images/frankclairewhisper.jpg">
-
-	<h1 class="losing message text-center center-block"></h1>
-
-	<img class="img-responsive center-block" id="otherimage" src="">
+    <div class="container transition">
+        <div class="row col-xs-12 col-md-6">
+            <h1 class="lose text-center center-block"></h1>
+            <h2 class="msg text-center center-block"></h2>
+            <button class="btn btn-primary center-block" id="nextQuestionButton">Next</button>
+            <button class="btn btn-primary text-center center-block" id="gameEnd">Results</button>
+        </div>
+        <div class="row col-xs-12 col-md-6">
+			<img class='img-responsive center-block' id="otherImage" src="assets/images/angryfrank.jpg">
+        </div>
+    </div>
+    
+    <div class="container results text-center">
+        <div class="row col-xs-12">
+            <h1 id="endMessage"></h1>
+            <h2>Number Right: <span id="numberRight"></span></h2>
+            <h2>Number Wrong: <span id="numberWrong"></span></h2>
+            <h2>Number Missed: <span id = "numberMissed"></span></h2>
+            <h2 class="center-block finalGrade"><span id="finalGrade"></span></h2>
+            <h3 class="winnerMessage"><span id="winnerMessage"></span></h3>
+            <button class="btn btn-primary center-block" id="newGame">Try again</button>
+        </div>
+    </div>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="assets/javascript/app.js"></script>
-
 
 </body>
 </html>

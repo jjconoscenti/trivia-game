@@ -34,19 +34,26 @@ $(document).ready(function() {
 		}
 	}]
 
-	//# of correct questions & current question holder
+	//# of correct questions, current question holder, timer
 
-	var numberCorrect = 0;
+	var numberRight = 0;
 	var numberWrong = 0;
 	var currentQuestion =0;
 	var timer;
 	var startTimer = 60;
 	var missed = 5;
 
-
 	// submit & move to next question
 
-
+	var domManipulator = {
+		question: $('#question'),
+		answers: $('#answers'),
+		answer1: $('#answer1'),
+		answer2: $('#answer2'),
+		answer3: $('#answer3'),
+		answer4: $('#answer4'),
+		answer5: $('#answer5'),
+	};
 
 
 
