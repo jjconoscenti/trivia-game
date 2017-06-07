@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Trivia Game</title>
+	<link rel="stylesheet" href="assets/css/reset.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+	<div class="jumbotron">
+		<a class = "link" href="https://www.netflix.com/title/70178217" target="_blank"><img class="logo img-responsive center-block" src="./assets/images/houseofcards.jpg"></a>
+		<br>
+		<a class="jj-link" href="https://github.com/jjconoscenti" target="_blank">CREATED BY JJ CONOSCENTI</a>
+
+		<h1 class="trivia-title text-center">HOUSE OF CARDS TRIVIA</h1>
+	</div>
+
+	<button class="btn btn lg center-block" id="gameStart">Start Game</button>
+
+	<div class="container controller text-center" id="">
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="time-remaining text-center"> Time Remaining: <span id="timeLeft"></span></h3>
+				<hr>
+				<h2 class="questions text-center" id="question"></h2>
+				<ul class="answers text-center" id="answers">
+					<li class="answer" id="answer1"></li>
+					<li class="answer" id="answer2"></li>
+					<li class="answer" id="answer3"></li>
+					<li class="answer" id="answer4"></li>
+				</ul>
+				<img id="imgsrc" src="">
+			</div>
+		</div>
+	</div>
+
+	<img class="img-responsive center-block" id="gameimage" src="assets/images/frankclairewhisper.jpg">
+
+	<h1 class="losing message text-center center-block"></h1>
+
+	<img class="img-responsive center-block" id="otherimage" src="">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="assets/javascript/app.js"></script>
+
+
+</body>
+</html>
