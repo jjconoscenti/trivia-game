@@ -53,7 +53,42 @@ $(document).ready(function() {
 		answer3: $('#answer3'),
 		answer4: $('#answer4'),
 		answer5: $('#answer5'),
+		timeLeft: $('#timeLeft'),
+		lose: $('.lose'),
+		msg: $('.msg'),
+        numberRight: $('#numberRight'),
+        numberWrong: $('#numberWrong'),
+        numberMissed: $('#numberMissed'),
+        results: $('.results'),
+        transition: $('.transition'),
+        controller: $('.controller'),
+        nextQuestionButton: $('#nextQuestionButton'),
+        gameEnd: $('#gameEnd'),
+        gameStart: $('#gameStart'),
+        newGame: $('#newGame'),
+        endMessage: $('#endMessage'),
+        finalGrade: $('#finalGrade'),
+        winnerMessage: $('#winnerMessage')
+
 	};
+
+
+	// start game
+
+	DOM.gameStart.on('click', gameStart);
+
+	// end game
+
+	// verify question
+
+	// next question
+
+
+
+
+
+
+
 
 
 
