@@ -100,8 +100,19 @@ $(document).ready(function() {
 		DOM.nextQuestionButton.show();
 	});
 
+	function gameStart () {
+		DOM.question.html(questions[currentQuestion].question);
+		DOM.answer1.html(questions[currentQuestion].choices[0]);
+		DOM.answer2.html(questions[currentQuestion].choices[0]);
+		DOM.answer3.html(questions[currentQuestion].choices[0]);
+		DOM.answer4.html(questions[currentQuestion].choices[0]);
+		DOM.answer5.html(questions[currentQuestion].choices[0]);
+		DOM.timeLeft.html(start);
+		timer = setInterval(liveTimer, 1000);
+		DOM.gameStart.hide();
+	}
 
-
+	// go to next question
 
 	
 
