@@ -4,5 +4,14 @@
 
 body {
 	text-align: center;
+	background-color: #C85C51;
 }
 
+.jumbotron {
+	background-color: #C85C51;
+	position: relative;
+}
+
+.controller {
+	background: green;
+}
