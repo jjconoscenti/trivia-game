@@ -112,9 +112,26 @@ $(document).ready(function() {
 		DOM.gameStart.hide();
 	}
 
+	// check answer
+
+	$('li').on('click', function () {
+		var answer = $(this).html();
+
+		if (answer === questions[currentQuestion].choices[questions[currentQuestion].correct]) {
+			nextQuestion(answer);
+			numberRight++;
+			numberMissed--;
+		} else if (answer !== questions[currentQuestion].choices[questions[currentQuestion].correct])
+			nextQuestion(answer);
+			numberWrong++
+			numberMissed--;
+	});
+
 	// go to next question
 
-	
+	function nextQuestion (userAnswer) {
+
+	}
 
 
 
