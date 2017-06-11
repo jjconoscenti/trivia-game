@@ -81,7 +81,7 @@ $(document).ready(function() {
 	DOM.endGame.on('click', function() {
 		DOM.transition.hide();
 		DOM.endMessage.html('You finished! Here\'s how you did: ');
-		showResults();
+		showGrade();
 		DOM.endGame.hide();
 		DOM.results.show();
 		DOM.newGame.show();
@@ -117,11 +117,11 @@ $(document).ready(function() {
 	$('li').on('click', function () {
 		var answer = $(this).html();
 
-		if (answer === questions[currentQuestion].choices[questions[currentQuestion].correct]) {
+		if (answer === questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
 			nextQuestion(answer);
 			numberRight++;
 			numberMissed--;
-		} else if (answer !== questions[currentQuestion].choices[questions[currentQuestion].correct])
+		} else if (answer !== questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
 			nextQuestion(answer);
 			numberWrong++
 			numberMissed--;
@@ -130,10 +130,60 @@ $(document).ready(function() {
 	// go to next question
 
 	function nextQuestion (userAnswer) {
+		DOM.controller.hide();
 
+		if (userAnswer === questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
+			clearInterval(timer);
+			console.log(correct);
+			DOM.transition.show();
+		}
+
+		if (userAnswer !== questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
+			clearInterval(timer);
+			console.log(incorrect);
+		}
+
+		if (currentQuestion === 4) {
+			clearInterval(timer);
+			DOM.nextQuestionButton.hide();
+			DOM.endGame.show();
+		}
 	}
 
+	// show grade
+	function showGrade () {
+		finalGrade = Math.floor((numberRight / 5) * 100);
+		DOM.numberRight.html('${numberRight}');
+		DOM.numberWrong.html('${numberWrong}');
+		DOM.numberMissed.html('${numberMissed}');
+		DOM.finalGrade.html('${finalGrade}');
 
+		if (finalGrade === 100) {
+			alert('Well, well, well. Seems like you have what it takes to join my administration.');
+		}
+
+		else if (finalGrade !== 100) {
+			DOM.loserMessage('You disgust me.');
+		}
+	}
+
+	function liveTimer () {
+		start -= 1;
+		$('timeLeft').html(gameStart);
+		timesUp ();
+	}
+
+	function timesUp () {
+		if (gameStart === 0) {
+			clearInterval(timer);
+			DOM.controller.hide();
+			DOM.transition.hide();
+			DOM.endMessage.html('Time is up. Here\'s your grade: ');
+			showGrade()
+			DOM.results.show();
+			DOM.newGame.show();
+		}
+	}
 
 
 
