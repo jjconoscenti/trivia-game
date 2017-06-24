@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 	//set of questions
 	var questions = [{
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
 		},
 		{
 			question: "What's Claire\'s maiden name?",
-			choices: ["Hale", "Harvey", "Roosevelt", "Grant"], 
+			choices: ["Hale", "Harvey", "Roosevelt", "Grant"],
 			questionNumber: 1,
 			correctAnswer: 0,
 		},
@@ -36,12 +36,10 @@ $(document).ready(function() {
 
 	//# of correct questions, current question holder, timer
 
-	var numberRight = 0;
-	var numberWrong = 0;
-	var currentQuestion =0;
-	var timer;
-	var startTimer = 60;
-	var missed = 5;
+	var correct = 0;
+	var current = 0;
+  var missed = 0;
+	var timerId;
 
 	// submit & move to next question
 
@@ -56,160 +54,124 @@ $(document).ready(function() {
 		timeLeft: $('#timeLeft'),
 		lose: $('.lose'),
 		msg: $('.msg'),
-        numberRight: $('#numberRight'),
-        numberWrong: $('#numberWrong'),
-        numberMissed: $('#numberMissed'),
-        results: $('.results'),
-        transition: $('.transition'),
-        controller: $('.controller'),
-        nextQuestionButton: $('#nextQuestionButton'),
-        gameEnd: $('#gameEnd'),
-        gameStart: $('#gameStart'),
-        newGame: $('#newGame'),
-        endMessage: $('#endMessage'),
-        finalGrade: $('#finalGrade'),
-        winnerMessage: $('#winnerMessage')
+    numberRight: $('#numberRight'),
+    numberWrong: $('#numberWrong'),
+    numberMissed: $('#numberMissed'),
+    results: $('.results'),
+    transition: $('.transition'),
+    controller: $('.controller'),
+    nextQuestionButton: $('#nextQuestionButton'),
+    gameEnd: $('#gameEnd'),
+    gameStart: $('#gameStart'),
+    newGame: $('#newGame'),
+    endMessage: $('#endMessage'),
+    finalGrade: $('#finalGrade'),
+    winnerMessage: $('#winnerMessage')
 
 	};
-
+  var DOM = domManipulator;
 	// start game with click
 
 	DOM.gameStart.on('click', gameStart);
-
-	
-	// end game with click
-	DOM.endGame.on('click', function() {
-		DOM.transition.hide();
-		DOM.endMessage.html('You finished! Here\'s how you did: ');
-		showGrade();
-		DOM.endGame.hide();
-		DOM.results.show();
-		DOM.newGame.show();
-	})
-
-	// start new game
-	DOM.newGame.on('click', function() {
-		numberRight = 0;
-		numberWrong = 0;
-		numberMissed = 5;
-		currentQuestion = 0;
-		start = 60;
-		finalGrade = 0;
-		DOM.results.hide();
-		DOM.gameStart.show();
-		DOM.nextQuestionButton.show();
-	});
+	DOM.newGame.on('click', gameStart);
+  DOM.nextQuestionButton.on('click', function () {
+    missed++;
+    nextQuestion();
+  });
+  $('li').on('click', validateAnswer);
 
 	function gameStart () {
-		DOM.question.html(questions[currentQuestion].question);
-		DOM.answer1.html(questions[currentQuestion].choices[0]);
-		DOM.answer2.html(questions[currentQuestion].choices[0]);
-		DOM.answer3.html(questions[currentQuestion].choices[0]);
-		DOM.answer4.html(questions[currentQuestion].choices[0]);
-		DOM.answer5.html(questions[currentQuestion].choices[0]);
-		DOM.timeLeft.html(start);
-		timer = setInterval(liveTimer, 1000);
-		DOM.gameStart.hide();
-	}
-
-	// check answer
-
-	$('li').on('click', function () {
-		var answer = $(this).html();
-
-		if (answer === questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
-			nextQuestion(answer);
-			numberRight++;
-			numberMissed--;
-		} else if (answer !== questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
-			nextQuestion(answer);
-			numberWrong++
-			numberMissed--;
-	});
-
-	// go to next question
-
-	function nextQuestion (userAnswer) {
-		DOM.controller.hide();
-
-		if (userAnswer === questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
-			clearInterval(timer);
-			console.log(correct);
-			DOM.transition.show();
-		}
-
-		if (userAnswer !== questions[currentQuestion].choices[questions[currentQuestion].correctAnswer]) {
-			clearInterval(timer);
-			console.log(incorrect);
-		}
-
-		if (currentQuestion === 4) {
-			clearInterval(timer);
-			DOM.nextQuestionButton.hide();
-			DOM.endGame.show();
-		}
+    correct = 0;
+	  current = 0;
+    missed = 0;
+		displayQuestion();
 	}
 
 	// show grade
 	function showGrade () {
-		finalGrade = Math.floor((numberRight / 5) * 100);
-		DOM.numberRight.html('${numberRight}');
-		DOM.numberWrong.html('${numberWrong}');
-		DOM.numberMissed.html('${numberMissed}');
-		DOM.finalGrade.html('${finalGrade}');
+		// finalGrade = Math.floor((numberRight / 5) * 100);
+		// DOM.numberRight.html('${numberRight}');
+		// DOM.numberWrong.html('${numberWrong}');
+		// DOM.numberMissed.html('${numberMissed}');
+		// DOM.finalGrade.html('${finalGrade}');
 
-		if (finalGrade === 100) {
-			alert('Well, well, well. Seems like you have what it takes to join my administration.');
-		}
+		// if (finalGrade === 100) {
+		// 	alert('Well, well, well. Seems like you have what it takes to join my administration.');
+		// }
 
-		else if (finalGrade !== 100) {
-			DOM.loserMessage('You disgust me.');
-		}
+		// else if (finalGrade !== 100) {
+		// 	DOM.loserMessage('You disgust me.');
+		// }
 	}
 
-	function liveTimer () {
-		start -= 1;
-		$('timeLeft').html(gameStart);
-		timesUp ();
-	}
+  function displayQuestion () {
+    var question = questions[current];
+    clearInterval(timerId);
 
-	function timesUp () {
-		if (gameStart === 0) {
-			clearInterval(timer);
-			DOM.controller.hide();
-			DOM.transition.hide();
-			DOM.endMessage.html('Time is up. Here\'s your grade: ');
-			showGrade()
-			DOM.results.show();
-			DOM.newGame.show();
-		}
-	}
+    if (question) {
+      DOM.question.html(question.question);
+      DOM.answer1.html(question.choices[0]);
+      DOM.answer2.html(question.choices[1]);
+      DOM.answer3.html(question.choices[2]);
+      DOM.answer4.html(question.choices[3]);
+      DOM.answer5.html(question.choices[4]);
+      startTimer();
+    } else {
+      endGame();
+    }
+  }
 
+  function startTimer () {
+    var time = 20;
+
+    $('#timeLeft').html(time);
+    timerId = setInterval(function () {
+      time--;
+      $('#timeLeft').html(time);
+      if (time === 0) {
+        missed++;
+        nextQuestion();
+      }
+    }, 1000);
+  }
+
+  function validateAnswer () {
+    var submitted = $(this).html();
+    var question = questions[current];
+    var answer = question.choices[question.correctAnswer];
+    if (submitted === answer) {
+      correct++;
+    }
+    nextQuestion();
+  }
+
+  function nextQuestion () {
+    current++;
+    displayQuestion();
+  }
+
+  function endGame () {
+    var wrong = questions.length - correct - missed;
+    var percent = (correct / questions.length * 100) + '%';
+    DOM.numberRight.text(correct);
+    DOM.numberWrong.text(wrong);
+    DOM.numberMissed.text(missed);
+  }
+
+  // Create Questions
+  // Globals
+      //correct = 0;current =0;timerId;
+  // Method: displayQuestion
+    //-> Start a Timer 60
+    //-> Display {current}
+    //-> if not questions[current] -> EndGame
+  // Method: startTimer -> if it gets to 0 nextQuestion
+  // Method: nextQuestion
+      //-> increment global{current: Number}
+      //-> displayQuestion()
+  // Method: validateAnswer
+      // -> increment global{current: Number}
+      // -> if Correct increment global{correct: number}
+      // -> stopTimer
+  // Method: endGame -> Display score
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-})
